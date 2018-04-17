@@ -34,7 +34,8 @@ export default {
       commentContent: "",
       warning: false,
       warningMessage: "",
-      userName: ""
+      userName: "",
+      article:''
     };
   },
   created() {},
@@ -57,8 +58,7 @@ export default {
         this.warningMessage = "评论不能为空";
         return;
       }
-      axios
-        .post("http://localhost:3000/main/comment/post", {
+      axios.post("http://localhost:3000/main/comment/post", {
           userName: this.userName,
           commentContent: this.commentContent,
           articleId: this.$route.query["id"]
@@ -72,6 +72,7 @@ export default {
             } else {
               this.commentContent = "";
               this.article = response.data.data;
+              console.log(response.data.data)
               this.article.comments.reverse();
               this.warningMessage = response.data.message;
               this.warning = true;

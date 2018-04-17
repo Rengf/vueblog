@@ -1,5 +1,7 @@
 let express = require('express');
 let router = express.Router();
+var fs = require('fs');
+var path = require('path');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 let User = require('../models/user');
@@ -144,7 +146,7 @@ router.post('/user/edit', multipartMiddleware, function(req, res, next) {
         } else {
             if (originalFilename) {
                 fs.readFile(filePath, function(err, data) {
-                    var newPath = path.join(__dirname, '../../', 'src/assets/images' + originalFilename);
+                    var newPath = path.join(__dirname, '../../', 'static/images/image' + originalFilename);
                     fs.writeFile(newPath, data, function(err) {
                         if (err) {
                             responseData.code = 500;
@@ -152,17 +154,25 @@ router.post('/user/edit', multipartMiddleware, function(req, res, next) {
                             res.json(responseData);
                             return;
                         } else {
-                            var HeadPortrait = 'src/assets/images' + originalFilename;
+                            var HeadPortrait = '../../../static/images/image' + originalFilename;
                             return User.update({
                                 _id: id
                             }, {
                                 HeadPortrait: HeadPortrait,
-                            })
+                            }).then(
+                                User.findOne({
+                                    _id: id
+                                }).then(function(userInfo) {
+                                    req.cookies.set('userInfo', JSON.stringify({
+                                        _id: userInfo.id,
+                                        username: userInfo.username,
+                                        HeadPortrait: userInfo.HeadPortrait,
+                                    }), { httpOnly: false })
+                                    res.json(responseData);
+                                    return;
+                                })
+                            )
                         }
-                    }).then(function() {
-                        responseData.code = 0;
-                        responseData.message = '修改成功';
-                        res.json(responseData);
                     })
                 })
             }

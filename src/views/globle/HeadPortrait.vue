@@ -3,6 +3,7 @@
       <input type="file" value='' @change="getFile">
       <p class="tip">请选择要上传的文件...</p>
       <button @click="onUpload">上传</button>
+      <p class="message" v-show="warn">{{tips}}</p>
   </div>
 </template>
 <script>
@@ -12,7 +13,9 @@ export default {
   data() {
     return {
         files:'',
-        id:''
+        id:'',
+        warn:'',
+        tips:'',
     };
   },
   created(){
@@ -39,15 +42,16 @@ export default {
         var imgreg = /.+((\.jpg$)|(\.png$))/gi;
         if (imgreg.test(this.files.name)) {
             var formData=new FormData();
-            
-            formData.append('image',this.files)
-            console.log(formData)
+            formData.append('image',this.files);
+            formData.append('id',this.id);
           axios.post("http://localhost:3000/api/user/edit", formData,{
                 headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
             }).then(response => {
-              console.log("正在上传");
+                this.warn=true;
+              this.tips=response.data.message;
+              this.$router.push('/')
             },
             response=>{
                 console.log("error:"+response)
