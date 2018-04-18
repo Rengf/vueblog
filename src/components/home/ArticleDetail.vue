@@ -43,7 +43,6 @@
                 this.categoryName=this.article.category.categoryName;
                 this.views=this.article.views;
                 this.commentsLength=this.article.comments.length;
-                this.article.comments.reverse();
             })
             }
         },

@@ -4,10 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import VueQuillEditor from 'vue-quill-editor'
 
 axios.defaults.withCredentials = true
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
+Vue.use(VueQuillEditor)
 
 /* eslint-disable no-new */
 new Vue({

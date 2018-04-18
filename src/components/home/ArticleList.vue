@@ -14,7 +14,7 @@
               <span>阅读量：{{article.views}}</span>
           </div>
       </div>
-      <div class="pager">
+      <div class="pager" v-show="pages>1">
             <div class="prev">
                 <span @click="prev" v-if="page>1">上一页</span>
                 <span @click="prev" v-else>上一页</span>

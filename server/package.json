@@ -17,5 +17,8 @@
     "mongose": "0.0.2-security",
     "morgan": "~1.8.1",
     "serve-favicon": "~2.4.2"
+  },
+  "devDependencies": {
+    "ueditor": "^1.2.3"
   }
 }
