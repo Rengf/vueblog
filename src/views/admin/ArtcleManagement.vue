@@ -16,7 +16,7 @@
                     <li >{{index+1}}</li>
                     <li :title=article.title>{{article.title}}</li>
                     <li>{{article.author}}</li>
-                    <li>{{article.category.categoryName}}</li>
+                    <li>{{article.category&&article.category.categoryName?article.category.categoryName:''}}</li>
                     <li>{{article.addTime}}</li>
                     <li class="editArticle">
                         <a @click="deleteArticle(article._id)">删除</a>

@@ -38,7 +38,6 @@ export default {
     };
   },
   created() {
-    this.article.comments.reverse();
   },
   methods: {
     onComment() {
@@ -70,7 +69,7 @@ export default {
                 } else {
                   this.commentContent = "";
                   this.article = response.data.data;
-                  this.article.comments.reverse();
+                  // this.article.comments.reverse();
                   this.warningMessage = response.data.message;
                   this.warning = true;
                 }

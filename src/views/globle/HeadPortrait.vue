@@ -42,7 +42,7 @@ export default {
         var imgreg = /.+((\.jpg$)|(\.png$))/gi;
         if (imgreg.test(this.files.name)) {
             var formData=new FormData();
-            formData.append('image',this.files);
+            formData.append('myFile',this.files);
             formData.append('id',this.id);
           axios.post("http://localhost:3000/api/user/edit", formData,{
                 headers: {

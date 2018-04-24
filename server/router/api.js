@@ -131,8 +131,9 @@ router.post('/user/login', function(req, res, next) {
 
 /**头像修改 */
 router.post('/user/edit', multipartMiddleware, function(req, res, next) {
+    console.log(req.body.data)
     var id = req.body.id;
-    var headPortrait = req.files.image;
+    var headPortrait = req.files.myFile;
     var filePath = headPortrait.path || '';
     var originalFilename = headPortrait.originalFilename;
     User.findOne({

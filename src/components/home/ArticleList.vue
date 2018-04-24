@@ -5,7 +5,7 @@
               <router-link :to="{path:'/ArticleDetail',query:{id:article._id}}">{{article.title}}</router-link>
             </div>
           <div class="articleContent">
-              <article style="text-indent:2em">{{article.content.substring(0,200)}}......</article>
+              <article style="text-indent:2em" v-html="article.content.substring(0,200)+'...'"></article>
               <router-link :to="{path:'/ArticleDetail',query:{id:article._id}}" class="readAll">阅读全文>></router-link>
           </div>
           <div class="otherMesg">
@@ -76,6 +76,11 @@ export default {
       this.getData();
     }
   },
+   computed:{
+            compiledMarkdown:function(){
+                return this.article.content
+            }
+        },
   watch: {
     $route(to, from) {
       this.getData();

@@ -5,7 +5,8 @@
                 :height="height"
                 :url="uploadUrl"
                 :field="fileName"
-                img-format="png"></vue-crop>
+                img-format="jpg">
+     </vue-crop>
 </template>
 
 <script>
