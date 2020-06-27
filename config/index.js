@@ -12,19 +12,19 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: '172.21.0.12:3000'
+        target: 'http://0.0.0.0:80/'
       },
       '/api/*': {
-        target: '172.21.0.12:3000'
+        target: 'http://0.0.0.0:3000/'
       },
       '/main/*': {
-        target: '172.21.0.12:3000'
+        target: 'http://0.0.0.0:3000/'
       },
       '/admin': {
-        target: '172.21.0.12:3000'
+        target: 'http://0.0.0.0:3000/'
       },
       '/admin/*': {
-        target: '172.21.0.12:3000'
+        target: 'http://0.0.0.0:3000/'
       }
     },
 
