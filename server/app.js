@@ -18,7 +18,7 @@ var User = require('./models/user.js');
 // app.engine('html', require('ejs').renderFile);
 // app.set('view engine', 'ejs');
 // //app.use(history()) // 这里千万要注意，要在static静态资源上面
-app.use(express.static(path.join(path.resolve(__dirname, '..'), 'dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 // 配置body-parser 配置好后就可以通过request的body属性获取数据了
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -70,6 +70,6 @@ mongoose.connect("mongodb://localhost:27017/vueblog", function (err) {
     console.log("数据库连接失败");
   } else {
     console.log("数据库连接成功");
-    app.listen(3000)
+    app.listen(80)
   }
 });

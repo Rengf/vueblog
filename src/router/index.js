@@ -17,74 +17,74 @@ import HeadPortrait from '@/views/globle/HeadPortrait'
 Vue.use(Router)
 
 const router = new Router({
-    mode: 'history',
-    routes: [{
-        path: '/',
-        component: Home,
-        children: [{
-            path: '/',
-            component: ArticleList
-        }, {
-            path: '/category',
-            component: ArticleList
-        }, {
-            path: '/ArticleDetail',
-            component: ArticleDetail
-        }]
+  mode: 'hash',
+  routes: [{
+    path: '/',
+    component: Home,
+    children: [{
+      path: '/',
+      component: ArticleList
     }, {
-        path: '/Login',
-        name: 'Login',
-        component: Login
+      path: '/category',
+      component: ArticleList
     }, {
-        path: '/Regist',
-        name: 'Regist',
-        component: Regist
-    }, {
-        path: '/Admin',
-        component: Admin,
-        children: [{
-            path: '/',
-            component: adminHome
-        }, {
-            path: '/Admin/Publish',
-            name: 'Publish',
-            component: Publish,
-            meta: {
-                requireAuth: true,
-            },
-        }, {
-            path: '/Admin/User',
-            name: 'User',
-            component: User,
-            meta: {
-                requireAuth: true,
-            },
-        }, {
-            path: '/Admin/Categories',
-            name: 'Categories',
-            component: Categories,
-            meta: {
-                requireAuth: true,
-            },
-        }, {
-            path: '/Admin/ArticleManagement',
-            name: 'ArticleManagement',
-            component: ArticleManagement,
-            meta: {
-                requireAuth: true,
-            },
-        }, {
-            path: '/Admin/ArticleEdit',
-            component: ArticleEdit,
-            meta: {
-                requireAuth: true,
-            },
-        }]
-    }, {
-        path: '/HeadPortrait',
-        name: 'HeadPortrait',
-        component: HeadPortrait,
+      path: '/ArticleDetail',
+      component: ArticleDetail
     }]
+  }, {
+    path: '/Login',
+    name: 'Login',
+    component: Login
+  }, {
+    path: '/Regist',
+    name: 'Regist',
+    component: Regist
+  }, {
+    path: '/Admin',
+    component: Admin,
+    children: [{
+      path: '/',
+      component: adminHome
+    }, {
+      path: '/Admin/Publish',
+      name: 'Publish',
+      component: Publish,
+      meta: {
+        requireAuth: true,
+      },
+    }, {
+      path: '/Admin/User',
+      name: 'User',
+      component: User,
+      meta: {
+        requireAuth: true,
+      },
+    }, {
+      path: '/Admin/Categories',
+      name: 'Categories',
+      component: Categories,
+      meta: {
+        requireAuth: true,
+      },
+    }, {
+      path: '/Admin/ArticleManagement',
+      name: 'ArticleManagement',
+      component: ArticleManagement,
+      meta: {
+        requireAuth: true,
+      },
+    }, {
+      path: '/Admin/ArticleEdit',
+      component: ArticleEdit,
+      meta: {
+        requireAuth: true,
+      },
+    }]
+  }, {
+    path: '/HeadPortrait',
+    name: 'HeadPortrait',
+    component: HeadPortrait,
+  }]
 })
 
 
