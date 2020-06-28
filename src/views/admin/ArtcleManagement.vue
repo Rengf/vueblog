@@ -1,31 +1,31 @@
 <template>
   <div class="content">
-      <div class="header">
-            <ul>
-                <li>编号</li>
-                <li>标题</li>
-                <li>作者</li>
-                <li>类别</li>
-                <li>发布时间</li>
-                <li>操作</li>
-            </ul>
-        </div>
-        <div class="body">
-            <div class="nav" v-for="(article,index) in articles">
-                <ul>
-                    <li >{{index+1}}</li>
-                    <li :title=article.title>{{article.title}}</li>
-                    <li>{{article.author}}</li>
-                    <li>{{article.category&&article.category.categoryName?article.category.categoryName:''}}</li>
-                    <li>{{article.addTime}}</li>
-                    <li class="editArticle">
-                        <a @click="deleteArticle(article._id)">删除</a>
-                        <router-link :to="{path:'/Admin/ArticleEdit',query:{id:article._id}}">编辑</router-link>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <pager :url="url" @getData="getData" v-if="render"></pager>
+    <div class="header">
+      <ul>
+        <li>编号</li>
+        <li>标题</li>
+        <li>作者</li>
+        <li>类别</li>
+        <li>发布时间</li>
+        <li>操作</li>
+      </ul>
+    </div>
+    <div class="body">
+      <div class="nav" v-for="(article,index) in articles">
+        <ul>
+          <li>{{index+1}}</li>
+          <li :title="article.title">{{article.title}}</li>
+          <li>{{article.author}}</li>
+          <li>{{article.category&&article.category.categoryName?article.category.categoryName:''}}</li>
+          <li>{{article.addTime}}</li>
+          <li class="editArticle">
+            <a @click="deleteArticle(article._id)">删除</a>
+            <router-link :to="{path:'/Admin/ArticleEdit',query:{id:article._id}}">编辑</router-link>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <pager :url="url" @getData="getData" v-if="render"></pager>
   </div>
 </template>
 <script>
@@ -36,18 +36,18 @@ export default {
   data() {
     return {
       articles: [],
-      render:false,
-      url:"http://localhost:3000/admin/article?page="
+      render: false,
+      url: "152.136.137.112:3000/admin/article?page="
     };
   },
   methods: {
     getData(response) {
-          this.articles = response.data.article;
+      this.articles = response.data.article;
     },
     deleteArticle(id) {
-      axios.get("http://localhost:3000/admin/article/delete?id=" + id).then(
+      axios.get("152.136.137.112:3000/admin/article/delete?id=" + id).then(
         response => {
-          axios.get("http://localhost:3000/admin/article").then(
+          axios.get("152.136.137.112:3000/admin/article").then(
             response => {
               this.count = response.data.count;
               this.limit = response.data.limit;

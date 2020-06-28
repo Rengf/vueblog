@@ -1,55 +1,55 @@
 <template>
   <div class="content">
-       <div class="header">
-            <ul>
-                <li>编号</li>
-                <li>类名</li>
-                <li>添加时间</li>
-                <li>操作</li>
-            </ul>
-        </div>
-        <div class="body">
-            <div class="nav" v-for="(nav,index) in navs">
-                <ul>
-                    <li>{{index+1}}</li>
-                    <li>{{nav.categoryName}}</li>
-                    <li>{{nav.addTime}}</li>
-                    <li class="eitCategory">
-                        <a @click="deleteCategory(nav._id)">删除</a>
-                        <a @click="editCategory(nav._id)">编辑</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <pager :url="url" @getData="getData" v-if="render"></pager>
-        <div class="addCategory">
-           <span>新建分类</span>
-           <div>
-               <span>分类名称:</span>
-               <input type="text" v-model="newCategoryName" placeholder="请输入新的分类名称">
-               <button @click="addCategory">确定添加分类</button>
-               <p v-show="warning">{{addCategoryWarning}}</p>
-           </div>
-       </div>
-        <div class="editCategory" v-show="edit">
-           <span>修改分类</span>
-           <div>
-               <span>分类名称:</span>
-               <input type="text" v-model="editCategoryName" placeholder="请输入新的分类名称">
-               <button @click="sureEditCategory">确定修改分类</button>
-               <p v-show="editwarning">{{editCategoryWarning}}</p>
-           </div>
-       </div>
+    <div class="header">
+      <ul>
+        <li>编号</li>
+        <li>类名</li>
+        <li>添加时间</li>
+        <li>操作</li>
+      </ul>
+    </div>
+    <div class="body">
+      <div class="nav" v-for="(nav,index) in navs">
+        <ul>
+          <li>{{index+1}}</li>
+          <li>{{nav.categoryName}}</li>
+          <li>{{nav.addTime}}</li>
+          <li class="eitCategory">
+            <a @click="deleteCategory(nav._id)">删除</a>
+            <a @click="editCategory(nav._id)">编辑</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <pager :url="url" @getData="getData" v-if="render"></pager>
+    <div class="addCategory">
+      <span>新建分类</span>
+      <div>
+        <span>分类名称:</span>
+        <input type="text" v-model="newCategoryName" placeholder="请输入新的分类名称" />
+        <button @click="addCategory">确定添加分类</button>
+        <p v-show="warning">{{addCategoryWarning}}</p>
+      </div>
+    </div>
+    <div class="editCategory" v-show="edit">
+      <span>修改分类</span>
+      <div>
+        <span>分类名称:</span>
+        <input type="text" v-model="editCategoryName" placeholder="请输入新的分类名称" />
+        <button @click="sureEditCategory">确定修改分类</button>
+        <p v-show="editwarning">{{editCategoryWarning}}</p>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import Pager from "../../components/pager"
+import Pager from "../../components/pager";
 import axios from "axios";
 export default {
   name: "Category",
   data() {
     return {
-        id:'',
+      id: "",
       navs: [],
       newCategoryName: "",
       warning: false,
@@ -58,13 +58,13 @@ export default {
       editCategoryName: "",
       editwarning: false,
       editCategoryWarning: "",
-     url:"http://localhost:3000/admin/category?page=",
-     render:false,
+      url: "152.136.137.112:3000/admin/category?page=",
+      render: false
     };
   },
   methods: {
-    getData(response){
-      this.navs=response.data.category;
+    getData(response) {
+      this.navs = response.data.category;
     },
     addCategory() {
       if (this.newCategoryName == "") {
@@ -72,7 +72,8 @@ export default {
         this.addCategoryWarning = "类名不能为空";
         return;
       }
-      axios.post("http://localhost:3000/admin/category/add", {
+      axios
+        .post("152.136.137.112:3000/admin/category/add", {
           categoryName: this.newCategoryName
         })
         .then(response => {
@@ -82,7 +83,7 @@ export default {
           } else {
             this.addCategoryWarning = response.data.message;
             this.warning = true;
-            axios.get("http://localhost:3000/admin/category").then(
+            axios.get("152.136.137.112:3000/admin/category").then(
               response => {
                 this.count = response.data.count;
                 this.limit = response.data.limit;
@@ -98,9 +99,9 @@ export default {
         });
     },
     deleteCategory(id) {
-      axios.get("http://localhost:3000/admin/category/delete?id=" + id).then(
+      axios.get("152.136.137.112:3000/admin/category/delete?id=" + id).then(
         response => {
-          axios.get("http://localhost:3000/admin/category").then(
+          axios.get("152.136.137.112:3000/admin/category").then(
             response => {
               this.count = response.data.count;
               this.limit = response.data.limit;
@@ -119,10 +120,10 @@ export default {
       );
     },
     editCategory(id) {
-      axios.get("http://localhost:3000/admin/category/edit?id=" + id).then(
+      axios.get("152.136.137.112:3000/admin/category/edit?id=" + id).then(
         response => {
           this.edit = true;
-          this.id=id;
+          this.id = id;
         },
         response => {
           console.log("error:" + response);
@@ -130,14 +131,15 @@ export default {
       );
     },
     sureEditCategory() {
-      axios.post("http://localhost:3000/admin/category/edit", {
+      axios
+        .post("152.136.137.112:3000/admin/category/edit", {
           id: this.id,
           categoryName: this.editCategoryName
         })
         .then(response => {
-            this.editCategoryWarning = response.message;
-            this.editwarning = true;
-            axios.get("http://localhost:3000/admin/category").then(
+          this.editCategoryWarning = response.message;
+          this.editwarning = true;
+          axios.get("152.136.137.112:3000/admin/category").then(
             response => {
               this.count = response.data.count;
               this.limit = response.data.limit;
@@ -152,7 +154,7 @@ export default {
         });
     }
   },
-  components:{
+  components: {
     Pager
   }
 };
@@ -192,7 +194,6 @@ a:hover {
   background: #ccc;
   cursor: pointer;
 }
-.addCategory{
-
+.addCategory {
 }
 </style>

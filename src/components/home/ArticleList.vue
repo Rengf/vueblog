@@ -1,32 +1,32 @@
 <template>
   <div class="articleList">
-      <div class="articlelListItem" v-for="(article,index) in articles">
-          <div class="articleTitle">
-              <router-link :to="{path:'/ArticleDetail',query:{id:article._id}}">{{article.title}}</router-link>
-            </div>
-          <div class="articleContent">
-              <article style="text-indent:2em" v-html="article.content.substring(0,200)+'...'"></article>
-              <router-link :to="{path:'/ArticleDetail',query:{id:article._id}}" class="readAll">阅读全文>></router-link>
-          </div>
-          <div class="otherMesg">
-              <span>发布日期：{{article.addTime.substring(0,10)}}</span>
-              <span>作者：{{article.author}}</span>
-              <span>阅读量：{{article.views}}</span>
-          </div>
+    <div class="articlelListItem" v-for="(article,index) in articles">
+      <div class="articleTitle">
+        <router-link :to="{path:'/ArticleDetail',query:{id:article._id}}">{{article.title}}</router-link>
       </div>
-      <div class="pager" v-show="pages>1">
-            <div class="prev">
-                <span @click="prev" v-if="page>1">上一页</span>
-                <span @click="prev" v-else>上一页</span>
-            </div>
-            <div class="count">
-                <span>共 {{count}} 条,   {{page}} / {{pages}} 页</span>
-            </div>
-            <div class="next">
-                <span @click="next" v-if="page<pages">下一页</span>
-                <span @click="next" v-else>下一页</span>
-            </div>
+      <div class="articleContent">
+        <article style="text-indent:2em" v-html="article.content.substring(0,200)+'...'"></article>
+        <router-link :to="{path:'/ArticleDetail',query:{id:article._id}}" class="readAll">阅读全文>></router-link>
       </div>
+      <div class="otherMesg">
+        <span>发布日期：{{article.addTime.substring(0,10)}}</span>
+        <span>作者：{{article.author}}</span>
+        <span>阅读量：{{article.views}}</span>
+      </div>
+    </div>
+    <div class="pager" v-show="pages>1">
+      <div class="prev">
+        <span @click="prev" v-if="page>1">上一页</span>
+        <span @click="prev" v-else>上一页</span>
+      </div>
+      <div class="count">
+        <span>共 {{count}} 条, {{page}} / {{pages}} 页</span>
+      </div>
+      <div class="next">
+        <span @click="next" v-if="page<pages">下一页</span>
+        <span @click="next" v-else>下一页</span>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -48,16 +48,22 @@ export default {
   methods: {
     getData() {
       var id = this.$route.query["id"] || "";
-      axios.get("http://localhost:3000/main/article?id=" + id+"&page="+this.page).then(response => {
-        this.articles = response.data.article;
-        this.count =response.data.count;
-        this.limit=response.data.limit;
-        this.pages=response.data.pages;
-        this.page=response.data.page;
-      },
-      response=>{
-        console.log("error:"+response)
-      });
+      axios
+        .get(
+          "152.136.137.112:3000/main/article?id=" + id + "&page=" + this.page
+        )
+        .then(
+          response => {
+            this.articles = response.data.article;
+            this.count = response.data.count;
+            this.limit = response.data.limit;
+            this.pages = response.data.pages;
+            this.page = response.data.page;
+          },
+          response => {
+            console.log("error:" + response);
+          }
+        );
     },
     prev() {
       this.page = this.page - 1;
@@ -76,16 +82,16 @@ export default {
       this.getData();
     }
   },
-   computed:{
-            compiledMarkdown:function(){
-                return this.article.content
-            }
-        },
+  computed: {
+    compiledMarkdown: function() {
+      return this.article.content;
+    }
+  },
   watch: {
     $route(to, from) {
       this.getData();
     }
-  },
+  }
 };
 </script>
 <style scoped>
@@ -139,26 +145,26 @@ export default {
   display: inline-block;
   margin: 0 9px;
 }
-.pager{
-  width:100%;
+.pager {
+  width: 100%;
   height: 50px;
   margin: auto;
-  display:flex;
-  flex-flow: row; 
+  display: flex;
+  flex-flow: row;
 }
 .prev,
 .count,
-.next{
+.next {
   text-align: center;
-  width:30%;
+  width: 30%;
   height: 25px;
   float: left;
   margin: 0 10px;
   line-height: 25px;
-  margin-top:5%;
+  margin-top: 5%;
 }
 .prev span:hover,
-.next span:hover{
+.next span:hover {
   cursor: pointer;
   background: #ccc;
 }

@@ -1,23 +1,23 @@
 <template>
-    <div class="comment">
-        <div class="editing">
-            <input type="textarea" :autosize="{minrow:2}" placeholder="写下你的评论" v-model="commentContent">
-            <button @click="onComment">发表评论</button>
-            <p v-if="warning">{{warningMessage}}</p>
-        </div>
-        <div class="commentList">
-            <span>共{{article.comments.length}}条评论</span>
-            <div class="commentItem" v-for="comment in article.comments">
-                <div class="commentTopbar">
-                    <span class="postMan">{{comment.userName}}：</span>
-                    <span class="comentContent">{{comment.commentContent}}</span>
-                </div>
-                <div>
-                    <span class="postTime">{{comment.postTime}}</span>
-                </div>
-            </div>
-        </div>
+  <div class="comment">
+    <div class="editing">
+      <input type="textarea" :autosize="{minrow:2}" placeholder="写下你的评论" v-model="commentContent" />
+      <button @click="onComment">发表评论</button>
+      <p v-if="warning">{{warningMessage}}</p>
     </div>
+    <div class="commentList">
+      <span>共{{article.comments.length}}条评论</span>
+      <div class="commentItem" v-for="comment in article.comments" :key="comment.userName">
+        <div class="commentTopbar">
+          <span class="postMan">{{comment.userName}}：</span>
+          <span class="comentContent">{{comment.commentContent}}</span>
+        </div>
+        <div>
+          <span class="postTime">{{comment.postTime}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import axios from "axios";
@@ -34,14 +34,13 @@ export default {
       commentContent: "",
       warning: false,
       warningMessage: "",
-      userName: "",
+      userName: ""
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     onComment() {
-      axios.get("http://localhost:3000/main/log").then(response => {
+      axios.get("152.136.137.112:3000:3000/main/log").then(response => {
         if (
           JSON.stringify(response.data.userInfo) == "{}" ||
           String(response.data.userInfo) == "undefined"
@@ -56,11 +55,13 @@ export default {
             this.warningMessage = "评论不能为空";
             return;
           }
-          axios.post("http://localhost:3000/main/comment/post", {
+          axios
+            .post("152.136.137.112:3000/main/comment/post", {
               userName: this.userName,
               commentContent: this.commentContent,
               articleId: this.$route.query["id"]
-            }).then(
+            })
+            .then(
               response => {
                 if (response.data.code == 404) {
                   this.warningMessage = response.data.message;

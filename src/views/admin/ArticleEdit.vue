@@ -1,42 +1,46 @@
 <template>
   <div class="content">
-      <div class="form">
-          <div class="articleTitle">
-              <P>*文章标题</P>
-              <input type="text" class="title" v-model="article.title" placeholder="文章标题" autofocus>
-          </div>
-          <div class="articleAuthor">
-              <P>*文章作者</P>
-              <input type="text" class="title" v-model="article.author" placeholder="文章作者">
-          </div>
-          <div class="articleContent">
-              <p>*文章内容</p>
-              <textarea id="editor" cols="30" rows="10" v-model="article.content" placeholder="文章内容"></textarea>
-          </div>
-          <p v-show="warningMsg">{{message}}</p>
-          <div class="otherMsg">
-              <div class="changCategory">
-                <p>*选择分类</p>
-                  <select name="category" v-model="selected" class="select">
-                      <option disabled value="">请选择</option>
-                      <option v-for="category in category" :key="category._id" :value="category._id">{{category.categoryName}}</option>
-                  </select>
-              </div>
-              <div class="newCategory">
-                  <p @click="showNewCategory" class="showNewCategory">*新建分类</p>
-                  <div v-show="newCategory">
-                      <p>*分类名称</p>
-                      <input type="text" v-model="categoryName" placeholder="输入分类名称">
-                      <button @click="addCategory">确认添加分类</button>
-                      <p v-show="categoryMsg">{{categoryWarning}}</p>
-                  </div>
-              </div>
-          </div>
-          <div class="button">
-              <button type="button" @click="publish">确认修改</button>
-              <button type="button">存草稿</button>
-          </div>
+    <div class="form">
+      <div class="articleTitle">
+        <P>*文章标题</P>
+        <input type="text" class="title" v-model="article.title" placeholder="文章标题" autofocus />
       </div>
+      <div class="articleAuthor">
+        <P>*文章作者</P>
+        <input type="text" class="title" v-model="article.author" placeholder="文章作者" />
+      </div>
+      <div class="articleContent">
+        <p>*文章内容</p>
+        <textarea id="editor" cols="30" rows="10" v-model="article.content" placeholder="文章内容"></textarea>
+      </div>
+      <p v-show="warningMsg">{{message}}</p>
+      <div class="otherMsg">
+        <div class="changCategory">
+          <p>*选择分类</p>
+          <select name="category" v-model="selected" class="select">
+            <option disabled value>请选择</option>
+            <option
+              v-for="category in category"
+              :key="category._id"
+              :value="category._id"
+            >{{category.categoryName}}</option>
+          </select>
+        </div>
+        <div class="newCategory">
+          <p @click="showNewCategory" class="showNewCategory">*新建分类</p>
+          <div v-show="newCategory">
+            <p>*分类名称</p>
+            <input type="text" v-model="categoryName" placeholder="输入分类名称" />
+            <button @click="addCategory">确认添加分类</button>
+            <p v-show="categoryMsg">{{categoryWarning}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="button">
+        <button type="button" @click="publish">确认修改</button>
+        <button type="button">存草稿</button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -61,30 +65,35 @@ export default {
   },
   methods: {
     getData() {
-      axios.get("http://localhost:3000/admin/article/edit?id=" + this.$route.query["id"]).then(
-        response => {
-          this.article = response.data.article;
-          axios.get("http://localhost:3000/admin/article/add").then(
-            response => {
-              this.category = response.data.category;
-            },
-            response => {
-              console.log("error:" + response);
-            }
-          );
-        },
-        response => {
-          console.log("error:" + response);
-        }
-      );
-      },
+      axios
+        .get(
+          "152.136.137.112:3000/admin/article/edit?id=" +
+            this.$route.query["id"]
+        )
+        .then(
+          response => {
+            this.article = response.data.article;
+            axios.get("152.136.137.112:3000/admin/article/add").then(
+              response => {
+                this.category = response.data.category;
+              },
+              response => {
+                console.log("error:" + response);
+              }
+            );
+          },
+          response => {
+            console.log("error:" + response);
+          }
+        );
+    },
     addCategory() {
       if (this.categoryName == "") {
         (this.categoryWarning = "类名不能为空"), (this.categoryMsg = true);
         return;
       }
       axios
-        .post("http://localhost:3000/admin/category/edit", {
+        .post("152.136.137.112:3000/admin/category/edit", {
           categoryName: this.categoryName
         })
         .then(
@@ -110,12 +119,17 @@ export default {
         this.warningMsg = true;
         return;
       }
-      axios.post("http://localhost:3000/admin/article/edit?id="+this.$route.query["id"], {
-          title: this.article.title,
-          author: this.article.author,
-          category: this.selected,
-          content: this.article.content
-        })
+      axios
+        .post(
+          "152.136.137.112:3000/admin/article/edit?id=" +
+            this.$route.query["id"],
+          {
+            title: this.article.title,
+            author: this.article.author,
+            category: this.selected,
+            content: this.article.content
+          }
+        )
         .then(
           response => {
             if (response.data.code == 0) {

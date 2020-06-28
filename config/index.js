@@ -12,24 +12,24 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://0.0.0.0:80/'
+        target: '152.136.137.112:3000/'
       },
       '/api/*': {
-        target: 'http://0.0.0.0:3000/'
+        target: '152.136.137.112:3000/'
       },
       '/main/*': {
-        target: 'http://0.0.0.0:3000/'
+        target: '152.136.137.112:3000/'
       },
       '/admin': {
-        target: 'http://0.0.0.0:3000/'
+        target: '152.136.137.112:3000/'
       },
       '/admin/*': {
-        target: 'http://0.0.0.0:3000/'
+        target: '152.136.137.112:3000/'
       }
     },
 
     // Various Dev Server settings
-    host: '152.136.137.112', // can be overwritten by process.env.HOST
+    host: 'localhost', // can be overwritten by process.env.HOST
     port: 8085, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,

@@ -1,9 +1,9 @@
 <template>
   <div class="warp">
-      <input type="file" value='' @change="getFile">
-      <p class="tip">请选择要上传的文件...</p>
-      <button @click="onUpload">上传</button>
-      <p class="message" v-show="warn">{{tips}}</p>
+    <input type="file" value @change="getFile" />
+    <p class="tip">请选择要上传的文件...</p>
+    <button @click="onUpload">上传</button>
+    <p class="message" v-show="warn">{{tips}}</p>
   </div>
 </template>
 <script>
@@ -12,26 +12,28 @@ export default {
   name: "HeadPortrait",
   data() {
     return {
-        files:'',
-        id:'',
-        warn:'',
-        tips:'',
+      files: "",
+      id: "",
+      warn: "",
+      tips: ""
     };
   },
-  created(){
-      axios.get("http://localhost:3000/main/log").then(
-            response => {
-                if (JSON.stringify(response.data.userInfo) == "{}"||String(response.data.userInfo)=="undefined") {
-                    this.showLogin = true;
-                }
-                else{
-                    this.id = response.data.userInfo._id;
-                }
-            },
-            response => {
-                console.log("error:" + response);
-            }
-        );
+  created() {
+    axios.get("152.136.137.112:3000/main/log").then(
+      response => {
+        if (
+          JSON.stringify(response.data.userInfo) == "{}" ||
+          String(response.data.userInfo) == "undefined"
+        ) {
+          this.showLogin = true;
+        } else {
+          this.id = response.data.userInfo._id;
+        }
+      },
+      response => {
+        console.log("error:" + response);
+      }
+    );
   },
   methods: {
     getFile(e) {
@@ -41,21 +43,25 @@ export default {
       if (this.files) {
         var imgreg = /.+((\.jpg$)|(\.png$))/gi;
         if (imgreg.test(this.files.name)) {
-            var formData=new FormData();
-            formData.append('myFile',this.files);
-            formData.append('id',this.id);
-          axios.post("http://localhost:3000/api/user/edit", formData,{
-                headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-            }).then(response => {
-                this.warn=true;
-              this.tips=response.data.message;
-              this.$router.push('/')
-            },
-            response=>{
-                console.log("error:"+response)
-            });
+          var formData = new FormData();
+          formData.append("myFile", this.files);
+          formData.append("id", this.id);
+          axios
+            .post("152.136.137.112:3000/api/user/edit", formData, {
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              }
+            })
+            .then(
+              response => {
+                this.warn = true;
+                this.tips = response.data.message;
+                this.$router.push("/");
+              },
+              response => {
+                console.log("error:" + response);
+              }
+            );
         }
       }
     }
@@ -63,5 +69,4 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>

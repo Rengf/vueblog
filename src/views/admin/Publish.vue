@@ -1,49 +1,54 @@
 <template>
   <div class="content">
     <div class="form">
-          <div class="articleTitle">
-              <P>*文章标题</P>
-              <input type="text" class="title" v-model="title" placeholder="文章标题" autofocus>
-          </div>
-          <div class="articleAuthor">
-              <P>*文章作者</P>
-              <input type="text" class="title" v-model="author" placeholder="文章作者">
-          </div>
-          <div class="articleContent">
-              <p>*文章内容</p>
-      <input type="button" value="切换裁切" @click="canCrop=!canCrop">
-      <editor ref="myTextEditor"
-            :fileName="'myFile'"
-            :canCrop="canCrop"
-            :uploadUrl="uploadUrl"
-            v-model="content">
-      </editor>
-    <div v-html="content"></div>
-    </div>
-          <p v-show="warningMsg">{{message}}</p>
-          <div class="otherMsg">
-              <div class="changCategory">
-                <p>*选择分类</p>
-                  <select name="category" v-model="selected" class="select">
-                      <option disabled value="">请选择</option>
-                      <option v-for="category in category" :key="category._id" :value="category._id">{{category.categoryName}}</option>
-                  </select>
-              </div>
-              <div class="newCategory">
-                  <p @click="showNewCategory" class="showNewCategory">*新建分类</p>
-                  <div v-show="newCategory">
-                      <p>*分类名称</p>
-                      <input type="text" v-model="categoryName" placeholder="输入分类名称">
-                      <button @click="addCategory">确认添加分类</button>
-                      <p v-show="categoryMsg">{{categoryWarning}}</p>
-                  </div>
-              </div>
-          </div>
-          <div class="button">
-              <button type="button" @click="publish">发布</button>
-              <button type="button">存草稿</button>
-          </div>
+      <div class="articleTitle">
+        <P>*文章标题</P>
+        <input type="text" class="title" v-model="title" placeholder="文章标题" autofocus />
       </div>
+      <div class="articleAuthor">
+        <P>*文章作者</P>
+        <input type="text" class="title" v-model="author" placeholder="文章作者" />
+      </div>
+      <div class="articleContent">
+        <p>*文章内容</p>
+        <input type="button" value="切换裁切" @click="canCrop=!canCrop" />
+        <editor
+          ref="myTextEditor"
+          :fileName="'myFile'"
+          :canCrop="canCrop"
+          :uploadUrl="uploadUrl"
+          v-model="content"
+        ></editor>
+        <div v-html="content"></div>
+      </div>
+      <p v-show="warningMsg">{{message}}</p>
+      <div class="otherMsg">
+        <div class="changCategory">
+          <p>*选择分类</p>
+          <select name="category" v-model="selected" class="select">
+            <option disabled value>请选择</option>
+            <option
+              v-for="category in category"
+              :key="category._id"
+              :value="category._id"
+            >{{category.categoryName}}</option>
+          </select>
+        </div>
+        <div class="newCategory">
+          <p @click="showNewCategory" class="showNewCategory">*新建分类</p>
+          <div v-show="newCategory">
+            <p>*分类名称</p>
+            <input type="text" v-model="categoryName" placeholder="输入分类名称" />
+            <button @click="addCategory">确认添加分类</button>
+            <p v-show="categoryMsg">{{categoryWarning}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="button">
+        <button type="button" @click="publish">发布</button>
+        <button type="button">存草稿</button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -65,7 +70,7 @@ export default {
       categoryWarning: "",
       newCategory: false,
       canCrop: false,
-      uploadUrl: "http://localhost:3000/api/user/edit"
+      uploadUrl: "152.136.137.112:3000/api/user/edit"
     };
   },
   created() {
@@ -73,7 +78,7 @@ export default {
   },
   methods: {
     getData() {
-      axios.get("http://localhost:3000/admin/article/add").then(
+      axios.get("152.136.137.112:3000/admin/article/add").then(
         response => {
           this.category = response.data.category;
         },
@@ -89,7 +94,7 @@ export default {
         return;
       }
       axios
-        .post("http://localhost:3000/admin/category/add", {
+        .post("152.136.137.112:3000/admin/category/add", {
           categoryName: this.categoryName
         })
         .then(
@@ -116,7 +121,7 @@ export default {
         return;
       }
       axios
-        .post("http://localhost:3000/admin/article/add", {
+        .post("152.136.137.112:3000/admin/article/add", {
           title: this.title,
           author: this.author,
           category: this.selected,
