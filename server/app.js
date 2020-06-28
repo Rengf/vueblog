@@ -70,6 +70,6 @@ mongoose.connect("mongodb://localhost:27017/vueblog", function (err) {
     console.log("数据库连接失败");
   } else {
     console.log("数据库连接成功");
-    app.listen(80)
+    app.listen(3000)
   }
 });
